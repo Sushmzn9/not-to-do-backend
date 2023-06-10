@@ -1,10 +1,11 @@
 import express from "express";
 const router = express.Router();
 
-const fakeDb = [
+let fakeDb = [
   { task: "watching Tv", hr: 33, type: "entry", _id: "ase3" },
   { task: "vcx Tv", hr: 33, type: "entry", _id: "gg" },
   { task: "asdcv Tv", hr: 33, type: "entry", _id: "cxz" },
+  { task: "dsfsd Tv", hr: 33, type: "entry", _id: "aa" },
 ];
 
 //Read data from database and return to the client
@@ -29,7 +30,7 @@ router.patch("/", (req, res) => {
   console.log(req.body);
   const { _id, type } = req.body;
 
-  fakeDb.map((item) => {
+  fakeDb = fakeDb.map((item) => {
     if (item._id === _id) {
       return { ...item, type };
     }
