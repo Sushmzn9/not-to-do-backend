@@ -1,0 +1,42 @@
+
+
+
+
+http://localhost:8000
+
+
+
+###get all the task from api
+GET http://localhost:8000/api/v1/task
+
+
+###post all the response from api
+POST http://localhost:8000/api/v1/task
+Content-Type: application/json
+
+{
+    "task":"watching Tv",
+    "hr": 33,
+    "type":"entry",
+    "_id":"ase3"
+}
+
+### update taskt at api
+
+PATCH  http://localhost:8000/api/v1/task
+Content-Type: application/json
+
+{
+    "__id": "ase3",
+    "entry" :"bad"
+}
+### delete taskt at api
+
+Delete http://localhost:8000/api/v1/task
+Content-Type: application/json
+
+
+{
+    "_id":"ase3",
+    "_id":"cxz"
+}
