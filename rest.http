@@ -15,10 +15,10 @@ POST http://localhost:8000/api/v1/task
 Content-Type: application/json
 
 {
-    "task":"watching Tv",
-    "hr": 33,
-    "type":"entry",
-    "_id":"ase3"
+    "task":"dancing",
+    "hr": 13,
+    "type":"entry"
+    
 }
 
 ### update taskt at api
@@ -27,16 +27,12 @@ PATCH  http://localhost:8000/api/v1/task
 Content-Type: application/json
 
 {
-    "_id": "aa",
-    "type" :"bad"
+    "_id": "64850626e87317bc1b6d6df5",
+    "type" :"entry"
 }
 ### delete taskt at api
 
-Delete http://localhost:8000/api/v1/task
+Delete http://localhost:8000/api/v1/task/64850626e87317bc1b6d6df5
 Content-Type: application/json
 
 
-{
-    "_id":"ase3",
-    "_id":"cxz"
-}

@@ -1,56 +1,92 @@
 import express from "express";
+import {
+  createTask,
+  deleteTaskById,
+  readTasks,
+  switchTask,
+  deleteManyTasks,
+} from "../model/TaskModel.js";
 const router = express.Router();
 
-let fakeDb = [
-  { task: "watching Tv", hr: 33, type: "entry", _id: "ase3" },
-  { task: "vcx Tv", hr: 33, type: "entry", _id: "gg" },
-  { task: "asdcv Tv", hr: 33, type: "entry", _id: "cxz" },
-  { task: "dsfsd Tv", hr: 33, type: "entry", _id: "aa" },
-];
+router.get("/", async (req, res) => {
+  //get data from the db
+  const taskList = await readTasks();
 
-//Read data from database and return to the client
-router.get("/", (req, res) => {
-  res.json({
-    message: "todo do Get method",
-    data: fakeDb,
-  });
-});
-
-//Receive data from client and Create new record into the database
-router.post("/", (req, res) => {
-  console.log("got hit", req.body);
-  fakeDb.push(req.body);
-  res.json({
-    message: "New task has been added",
-  });
-});
-
-//update record into the database based on the information received
-router.patch("/", (req, res) => {
-  console.log(req.body);
-  const { _id, type } = req.body;
-
-  fakeDb = fakeDb.map((item) => {
-    if (item._id === _id) {
-      return { ...item, type };
-    }
-    return item;
-  });
   res.json({
     status: "success",
-    message: "task has been switched",
+    message: "From Get method",
+    taskList,
   });
 });
-console.log(fakeDb);
-//deleted one or many records from the database based on the information received
-router.delete("/", (req, res) => {
-  const { _id } = req.body;
-  console.log(_id);
-  //delete
-  fakeDb - fakeDb.filter((item) => item._id !== _id);
-  res.json({
-    message: "This item is deleted",
-    _id,
-  });
+
+router.post("/", async (req, res) => {
+  try {
+    const result = await createTask(req.body);
+
+    result?._id
+      ? res.json({
+          status: "success",
+          message: "New task has been added successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "unable to add the data",
+        });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: error.messasge,
+    });
+    console.log(error);
+  }
 });
+
+router.patch("/", async (req, res) => {
+  try {
+    const { _id, type } = req.body;
+    // update data in db
+    const result = await switchTask(_id, type);
+
+    result?._id
+      ? res.json({
+          status: "success",
+          message: "The task has been switeched successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "The task did not switeched ",
+        });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      status: "error",
+      message: "The task did not switeched ",
+    });
+  }
+});
+
+router.delete("/", async (req, res) => {
+  try {
+    const result = await deleteManyTasks(req.body);
+
+    result?.deletedCount > 0
+      ? res.json({
+          status: "success",
+          message: "The tasks have been deleted successfully",
+        })
+      : res.json({
+          status: "error",
+          message: "Unable to delete the task ",
+        });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      status: "error",
+      message: "Error deleting the task",
+    });
+  }
+});
+
 export default router;

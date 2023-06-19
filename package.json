@@ -13,7 +13,10 @@
   "author": "Sushan Maharjan",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "module_name": "^1.0.0",
+    "mongoose": "^7.2.3",
     "morgan": "^1.10.0"
   }
 }
