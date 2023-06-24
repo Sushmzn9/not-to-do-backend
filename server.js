@@ -12,8 +12,8 @@ console.log(__dirname);
 
 // connect mongoDb
 
-import { mongoConnect } from "./src/config/mongoDb.js";
-mongoConnect();
+// import { mongoConnect } from "./src/config/mongoDb.js";
+// mongoConnect();
 
 // middleware
 app.use(express.json());
@@ -22,6 +22,7 @@ app.use(express.static(__dirname + "/build"));
 
 //api endpoints
 import taskRouter from "./src/routers/taskRouters.js";
+import mongoose from "mongoose";
 app.use("/api/v1/task", taskRouter);
 
 app.use("/", (req, res) => {
@@ -37,11 +38,13 @@ app.get("/", (req, res) => {
   });
 });
 
-// server listening the port
-app.listen(PORT, (error) => {
-  error && console.log(error.message);
+mongoose.connect(process.env.MONGO_CLIENT).then(() => {
+  app.listen(PORT, (error) => {
+    error && console.log(error.message);
 
-  console.log(`
-  server running at http://localhost:${PORT}
-  `);
+    console.log(`
+    server running at http://localhost:${PORT}
+    `);
+  });
 });
+// server listening the port
