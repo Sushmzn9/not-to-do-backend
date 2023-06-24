@@ -13,7 +13,6 @@ console.log(__dirname);
 // connect mongoDb
 
 import { mongoConnect } from "./src/config/mongoDb.js";
-
 mongoConnect();
 
 // middleware
@@ -29,7 +28,7 @@ app.use("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-console.log(process.env);
+console.log(process.env.NODE_ENV);
 
 app.get("/", (req, res) => {
   res.json({
